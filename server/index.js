@@ -4,16 +4,17 @@ const http = require("http").Server(app);
 const path = require("path");
 const io = require("socket.io")(http);
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || "mongodb://localhost/chat";
 const port = process.env.PORT || 5000;
 
-const Message = require("./Message");
 const mongoose = require("mongoose");
 
 mongoose.connect(uri, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
+
+const Message = require("./Message");
 
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 

@@ -6,7 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently --kill-others \"heroku local\" \"npm run start --prefix ./client\"",
-    "postinstall": "npm install --prefix ./server && npm install --prefix ./client && npm run build --prefix ./client"
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node sever/index.js",
+    "start:dev": "concurrently \"nodemon server/index.js --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "concurrently \"cd client && npm install\" \"cd server && npm install\"",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
