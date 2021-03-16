@@ -1,0 +1,25 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "This app uses MERN to allow a simple chat service.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently --kill-others \"heroku local\" \"npm run start --prefix ./client\"",
+    "postinstall": "npm install --prefix ./server && npm install --prefix ./client && npm run build --prefix ./client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vpickard707/ChatApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vpickard707/ChatApp/issues"
+  },
+  "homepage": "https://github.com/vpickard707/ChatApp#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.0"
+  }
+}
+
