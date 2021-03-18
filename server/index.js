@@ -22,15 +22,6 @@ mongoose.connect(uri, {
 const Message = require("./Message");
 
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
-app.get("/", (req, res) => {
-  Message.find()
-    .sort({ createdAt: -1 })
-    .limit(10)
-    .exec((err, messages) => {
-      if (err) return console.error(err);
-      console.log(messages);
-    });
-});
 io.on("connection", (socket) => {
   // Get the last 10 messages from the database.
   Message.find()
