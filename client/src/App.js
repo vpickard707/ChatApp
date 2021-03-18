@@ -20,7 +20,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.socket = io(config[process.env.NODE_ENV].endpoint);
+    const url = process.env.NODE_ENV
+      ? config[process.env.NODE_ENV].endpoint
+      : "/";
+    this.socket = io();
     console.log(config[process.env.NODE_ENV]);
 
     // Load the last 10 messages in the window.
