@@ -2,12 +2,17 @@ const express = require("express");
 const app = express();
 const http = require("http").Server(app);
 const path = require("path");
-const io = require("socket.io")(http, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
+let io;
+if (process.env.PORT) {
+  io = require("socket.io")(http);
+} else {
+  io = require("socket.io")(http, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+    },
+  });
+}
 
 const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1/chat";
 const port = process.env.PORT || 5000;
