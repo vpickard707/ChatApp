@@ -4,7 +4,12 @@ const http = require("http").Server(app);
 const path = require("path");
 let io;
 if (process.env.PORT) {
-  io = require("socket.io")(http);
+  io = require("socket.io")(http, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+    },
+  });
 } else {
   io = require("socket.io")(http, {
     cors: {
