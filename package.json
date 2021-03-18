@@ -24,8 +24,7 @@
     "url": "https://github.com/vpickard707/ChatApp/issues"
   },
   "homepage": "https://github.com/vpickard707/ChatApp#readme",
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^6.0.0"
   }
 }
-
