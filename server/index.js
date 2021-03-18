@@ -2,9 +2,14 @@ const express = require("express");
 const app = express();
 const http = require("http").Server(app);
 const path = require("path");
-const io = require("socket.io")(http);
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
-const uri = process.env.MONGODB_URI || "mongodb://localhost/chat";
+const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1/chat";
 const port = process.env.PORT || 5000;
 
 const mongoose = require("mongoose");
@@ -17,7 +22,15 @@ mongoose.connect(uri, {
 const Message = require("./Message");
 
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
-
+app.get("/", (req, res) => {
+  Message.find()
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .exec((err, messages) => {
+      if (err) return console.error(err);
+      console.log(messages);
+    });
+});
 io.on("connection", (socket) => {
   // Get the last 10 messages from the database.
   Message.find()
@@ -25,7 +38,7 @@ io.on("connection", (socket) => {
     .limit(10)
     .exec((err, messages) => {
       if (err) return console.error(err);
-
+      console.log(messages);
       // Send the last messages to the user.
       socket.emit("init", messages);
     });

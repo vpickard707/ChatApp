@@ -21,10 +21,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.socket = io(config[process.env.NODE_ENV].endpoint);
+    console.log(config[process.env.NODE_ENV]);
 
     // Load the last 10 messages in the window.
     this.socket.on("init", (msg) => {
       let msgReversed = msg.reverse();
+      console.log(this.socket);
       this.setState(
         (state) => ({
           chat: [...state.chat, ...msgReversed],
@@ -67,7 +69,7 @@ class App extends React.Component {
       name: this.state.name,
       content: this.state.content,
     });
-
+    console.log(this.socket);
     this.setState((state) => {
       // Update the chat with the user's message and remove the current message.
       return {
