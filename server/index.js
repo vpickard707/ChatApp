@@ -27,6 +27,7 @@ mongoose.connect(uri, {
 const Message = require("./Message");
 
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
+
 io.on("connection", (socket) => {
   // Get the last 10 messages from the database.
   Message.find()
@@ -55,6 +56,10 @@ io.on("connection", (socket) => {
     // Notify all other users about a new message.
     socket.broadcast.emit("push", msg);
   });
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
 http.listen(port, () => {
