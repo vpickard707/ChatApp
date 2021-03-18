@@ -20,9 +20,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.socket = io(
-      config[process.env.NODE_ENV].endpoint || "chatappmern1.heroku.com"
-    );
+    this.socket = io("chatappmern1.heroku.com");
     console.log(process.env.NODE_ENV, config[process.env.NODE_ENV]);
 
     // Load the last 10 messages in the window.
